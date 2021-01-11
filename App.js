@@ -7,7 +7,12 @@
  */
 
 import React, { Component } from 'react';
-import Get_Image from './Get_Image'
+
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
+import Get_Image_Page from './view-pages/Get_Image_Page'
+import Load_Image_Page from './view-pages/Load_Image_Page';
 
 import {
   SafeAreaView,
@@ -31,56 +36,24 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-class logo_Motion extends React.Component {
-  state = {
-    animation: new Animated.Value(0)
-  }
-}
+const Stack = createStackNavigator();
 
 export default class GAN_Transfer extends Component{
-
-  constructor(props) {
-    super(props);
-  }
-
+  
   render() {
-    const get_image = new Get_Image();
-
     return (
-      <>
-        <StatusBar barStyle="dark-content" />
-        <SafeAreaView>
-          <ScrollView
-            contentInsetAdjustmentBehavior="automatic"
-            style={styles.scrollView}>
-            <View style={styles.body}>
-              <Text style={styles.uppertext}>
-                2020학년도 겨울방학 경험학점제 자기주도학습
-              </Text>
-              <View style={styles.middle_logo_container}>
-                <Image
-                  style={styles.middle_logo}
-                  source={require('./logo.png')}
-                />
-                <Text style={styles.middle_text}>GAN Transfer</Text>
-                <View style={styles.bottom_button1}>
-                  <Button
-                    title="사진찍어서 가져오기"
-                    onPress={() => get_image.getphotoFromCamera()}
-                  />
-                </View>
-                <View style={styles.bottom_button2}>
-                  <Button
-                    title="갤러리에서 가져오기"
-                    onPress={() => {get_image.getphotoFromGallery(); console.log(JSON.stringify(get_image.res))}}
-                  />
-                </View>
-              </View>
-              <View style={{paddingTop: 130}} />
-            </View>
-          </ScrollView>
-        </SafeAreaView>
-      </>
+      <NavigationContainer>
+        <Stack.Navigator 
+          initialRouteName="Main"
+          screenOptions={{
+            headerShown: false
+          }}
+        >
+          <Stack.Screen name="Main" component={Get_Image_Page} />
+          <Stack.Screen name="Load_Image_Page" component={Load_Image_Page} />
+        </Stack.Navigator>
+      </NavigationContainer>
+
     );
   }
 }

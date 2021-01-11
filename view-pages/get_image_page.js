@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import Get_Image from '../Get_Image'
 
@@ -18,16 +17,19 @@ import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
 
-type Props = {};
-export default class Get_Image_Page extends Component<Props>{
+export default class Get_Image_Page extends Component{
 
-  static navigationoptions = {
-    title: 'Get_Image_Page',
-  };
+  buttonOnpress(navigation, get_image_from_where, to_navigate){    // where : string, to_navigate : string
+    const get_image = new Get_Image();
+    if(get_image_from_where === 'camera'){
+      get_image.getphotoFromCamera(); 
+    }else if(get_image_from_where === 'gallery'){
+      get_image.getphotoFromGallery();
+    }
+    navigation.navigate(to_navigate, {image_info: get_image.res});
+  }
 
   render() {
-    const get_image = new Get_Image();
-    const {navigate} = this.props.navigation;
     return (
       <>
         <StatusBar barStyle="dark-content" />
@@ -40,18 +42,18 @@ export default class Get_Image_Page extends Component<Props>{
               <View style={styles.middle_logo_container}>
               <Image
                 style={styles.middle_logo}
-                source={require('./logo.png')}/>
+                source={require('../logo.png')}/>
               <Text style={styles.middle_text}>GAN Transfer</Text>
               <View style={styles.bottom_button1}>
                 <Button
                   title="사진찍어서 가져오기"
-                  onPress={() => {get_image.getphotoFromCamera(); navigate('load_image_page.js', {image_info: get_image.});}}
+                  onPress={() => this.buttonOnpress(this.props.navigation, 'camera', 'Load_Image_Page')}
                 />
               </View>
               <View style={styles.bottom_button2}>
                 <Button
                   title="갤러리에서 가져오기"
-                  onPress={() => get_image.getphotoFromGallery()}
+                  onPress={() => this.buttonOnpress(this.props.navigation, 'gallery', 'Load_Image_Page')}
                 />
               </View>
               </View>
