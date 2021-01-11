@@ -15,40 +15,43 @@ export default class Get_Image {
         mediaType: 'photo',
       };
       get_permission.requestCameraPermission();
-      launchCamera(options, (res) => {      //res는 반환한 객체, https://github.com/react-native-image-picker/react-native-image-picker/blob/main/README.md#options 참고.
-        if (res.didCancel) {
-          console.log('User cancelled image picker');
-        } else if (res.error) {
-          console.log('ImagePicker Error: ', res.error);
-        } else if (res.customButton) {
-          console.log('User tapped custom button: ', res.customButton);
-          alert(res.customButton);
-        } else {
-          const source = { uri: res.uri };
-          this.res = res;
-        }
-        console.log('response', JSON.stringify(this.res));
+      return new Promise((resolve, reject) => {
+        launchCamera(options, (res) => {      //res는 반환한 객체, https://github.com/react-native-image-picker/react-native-image-picker/blob/main/README.md#options 참고.
+          if (res.didCancel) {
+            console.log('User cancelled image picker');
+          } else if (res.error) {
+            console.log('ImagePicker Error: ', res.error);
+          } else if (res.customButton) {
+            console.log('User tapped custom button: ', res.customButton);
+            alert(res.customButton);
+          } else {
+            const source = { uri: res.uri };
+            console.log('response', JSON.stringify(res));
+            resolve(res);
+          }
+        });
       });
-  
     }
     
     getphotoFromGallery(){
       const options = {
         mediaType: 'photo',
       };
-      launchImageLibrary(options, (res) => {      //res는 반환한 객체, https://github.com/react-native-image-picker/react-native-image-picker/blob/main/README.md#options 참고.
-        if (res.didCancel) {
-          console.log('User cancelled image picker');
-        } else if (res.error) {
-          console.log('ImagePicker Error: ', res.error);
-        } else if (res.customButton) {
-          console.log('User tapped custom button: ', res.customButton);
-          alert(res.customButton);
-        } else {
-          const source = { uri: res.uri };
-          this.res = res;
-        }
-        console.log('response', JSON.stringify(this.res));
+      return new Promise((resolve, reject) => {
+        launchImageLibrary(options, (res) => {      //res is callback, https://github.com/react-native-image-picker/react-native-image-picker/blob/main/README.md#options 참고.
+          if (res.didCancel) {
+            console.log('User cancelled image picker');
+          } else if (res.error) {
+            console.log('ImagePicker Error: ', res.error);
+          } else if (res.customButton) {
+            console.log('User tapped custom button: ', res.customButton);
+            alert(res.customButton);
+          } else {
+            const source = { uri: res.uri };
+            console.log('response', JSON.stringify(this.res));
+            resolve(res);
+          }
+        });
       });
     }
   }

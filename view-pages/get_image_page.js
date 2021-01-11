@@ -19,14 +19,21 @@ import {
 
 export default class Get_Image_Page extends Component{
 
-  buttonOnpress(navigation, get_image_from_where, to_navigate){    // where : string, to_navigate : string
+  async buttonPress(navigation, get_image_from_where, to_navigate){    // where : string, to_navigate : string
+    
     const get_image = new Get_Image();
-    if(get_image_from_where === 'camera'){
-      get_image.getphotoFromCamera(); 
-    }else if(get_image_from_where === 'gallery'){
-      get_image.getphotoFromGallery();
+    let res;
+    try{
+      if(get_image_from_where == 'camera'){
+        res = await get_image.getphotoFromCamera();
+      }else if(get_image_from_where == 'gallery'){
+        res = await get_image.getphotoFromGallery();
+      }
+    }catch(err){
+      console.log(err);
     }
-    navigation.navigate(to_navigate, {image_info: get_image.res});
+    console.log("image info : " + JSON.stringify(res));
+    navigation.navigate(to_navigate, {image_info: res});
   }
 
   render() {
@@ -47,13 +54,13 @@ export default class Get_Image_Page extends Component{
               <View style={styles.bottom_button1}>
                 <Button
                   title="사진찍어서 가져오기"
-                  onPress={() => this.buttonOnpress(this.props.navigation, 'camera', 'Load_Image_Page')}
+                  onPress={() => this.buttonPress(this.props.navigation, 'camera', 'Load_Image_Page')}
                 />
               </View>
               <View style={styles.bottom_button2}>
                 <Button
                   title="갤러리에서 가져오기"
-                  onPress={() => this.buttonOnpress(this.props.navigation, 'gallery', 'Load_Image_Page')}
+                  onPress={() => this.buttonPress(this.props.navigation, 'gallery', 'Load_Image_Page')}
                 />
               </View>
               </View>
