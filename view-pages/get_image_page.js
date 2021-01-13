@@ -15,7 +15,7 @@ import {
 
 import {
   Colors,
-} from 'react-native/Libraries/NewAppScreen';
+} from 'react-native/Libraries/NewAppScreen'
 
 export default class Get_Image_Page extends Component{
 
@@ -41,9 +41,6 @@ export default class Get_Image_Page extends Component{
       <>
         <StatusBar barStyle="dark-content" />
         <SafeAreaView>
-          <ScrollView
-            contentInsetAdjustmentBehavior="automatic"
-            style={styles.scrollView}>
             <View style={styles.body}>
               <Text style={styles.uppertext}>2020학년도 겨울방학 경험학점제 자기주도학습</Text>
               <View style={styles.middle_logo_container}>
@@ -64,11 +61,14 @@ export default class Get_Image_Page extends Component{
                 />
               </View>
               </View>
-              <View style={{paddingTop: 130}}>
-        
+              <View style={{paddingTop: 70}}>
+              </View>
+              <View style={styles.smu_logo_container}>
+                <Image
+                  style={styles.smu_logo}
+                  source={require('../smu_logo.jpg')}/>
               </View>
             </View>
-          </ScrollView>
         </SafeAreaView>
       </>
     );
@@ -82,39 +82,49 @@ const styles = StyleSheet.create({
   uppertext: {
     fontSize: 12,
     textAlign: 'center',
-    backgroundColor: 'white',
+    backgroundColor: Colors.lighter,
     color: Colors.black,
     padding: 20,
-    paddingBottom: 100,
+    paddingBottom: 80,
   },
   middle_logo_container: {
     resizeMode: 'contain',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 30,
+    padding: 30,
   },
   middle_logo: {
     height:200,
     width:200,
   },
+  smu_logo_container: {
+    resizeMode: 'contain',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  smu_logo: {
+    height:17,
+    width:218,
+  },
   bottom_button1: {
     resizeMode: 'contain',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 50,
+    paddingTop: 10,
   },
   bottom_button2: {
     resizeMode: 'contain',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 15,
+    paddingTop: 25,
   },
   middle_text: {
     fontSize: 18,
     textAlign: 'center',
-    padding: 10,
+    paddingBottom: 70,
+    paddingTop: 10,
   },
   body: {
-    backgroundColor: 'white',
+    backgroundColor: Colors.lighter,
   },
 });

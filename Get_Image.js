@@ -1,4 +1,5 @@
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import ImagePicker from 'react-native-image-crop-picker';
 import Get_Permission from './Get_Permission'
 
 export default class Get_Image {
@@ -15,7 +16,17 @@ export default class Get_Image {
         mediaType: 'photo',
       };
       get_permission.requestCameraPermission();
-      return new Promise((resolve, reject) => {
+      get_permission.requestReadExternalStorage();
+      return new Promise((resolve, reject) => {  
+        ImagePicker.openCamera({
+          useFrontCamera: true,
+          width: 500,
+          height: 500,
+          cropping: true
+        }).then(image => {
+          resolve(image);
+        }).catch((err) => { console.log(err)} );
+        /*
         launchCamera(options, (res) => {      //res는 반환한 객체, https://github.com/react-native-image-picker/react-native-image-picker/blob/main/README.md#options 참고.
           if (res.didCancel) {
             console.log('User cancelled image picker');
@@ -29,15 +40,23 @@ export default class Get_Image {
             console.log('response', JSON.stringify(res));
             resolve(res);
           }
-        });
-      });
-    }
+      });*/
+    });
+  }
     
     getphotoFromGallery(){
       const options = {
         mediaType: 'photo',
       };
       return new Promise((resolve, reject) => {
+        ImagePicker.openPicker({
+          width: 500,
+          height: 500,
+          cropping: true
+        }).then(image => {
+          resolve(image);
+        }).catch((err) => { console.log(err)} );
+        /*
         launchImageLibrary(options, (res) => {      //res is callback, https://github.com/react-native-image-picker/react-native-image-picker/blob/main/README.md#options 참고.
           if (res.didCancel) {
             console.log('User cancelled image picker');
@@ -51,7 +70,7 @@ export default class Get_Image {
             console.log('response', JSON.stringify(this.res));
             resolve(res);
           }
-        });
+        });*/
       });
     }
   }

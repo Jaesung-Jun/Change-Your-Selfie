@@ -6,6 +6,10 @@
  */
 
 module.exports = {
+  resolver: {
+    blacklistRE: /#current-cloud-backend\/.*/,
+    sourceExts: ['jsx','js','ts','tsx'] //add here 
+  },
   transformer: {
     getTransformOptions: async () => ({
       transform: {
