@@ -1,4 +1,4 @@
-import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+//import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import ImagePicker from 'react-native-image-crop-picker';
 import Get_Permission from './Get_Permission'
 
@@ -6,17 +6,13 @@ export default class Get_Image {
 
     constructor(){
       this.res = false;
+      const get_permission = new Get_Permission();
+      get_permission.requestCameraPermission();
+      get_permission.requestReadExternalStorage();
     }
   
     getphotoFromCamera(){
-  
-      const get_permission = new Get_Permission();
       
-      const options = {
-        mediaType: 'photo',
-      };
-      get_permission.requestCameraPermission();
-      get_permission.requestReadExternalStorage();
       return new Promise((resolve, reject) => {  
         ImagePicker.openCamera({
           useFrontCamera: true,

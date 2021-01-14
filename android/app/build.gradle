@@ -184,7 +184,9 @@ android {
 }
 
 dependencies {
-    compile project(':react-native-image-crop-picker')
+    implementation project(':react-native-image-crop-picker')
+    implementation project(':react-native-fs')
+
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules

@@ -28,6 +28,8 @@ target 'GAN_transfer' do
 
   pod 'SentryReactNative', :path => '../node_modules/react-native-sentry'
 
+  pod 'RNFS', :path => '../node_modules/react-native-fs'
+
   target 'GAN_transferTests' do
     inherit! :complete
     # Pods for testing

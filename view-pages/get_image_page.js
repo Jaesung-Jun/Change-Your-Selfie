@@ -40,46 +40,45 @@ export default class Get_Image_Page extends Component{
     return (
       <>
         <StatusBar barStyle="dark-content" />
-        <SafeAreaView>
-            <View style={styles.body}>
-              <Text style={styles.uppertext}>2020학년도 겨울방학 경험학점제 자기주도학습</Text>
-              <View style={styles.middle_logo_container}>
-              <Image
-                style={styles.middle_logo}
-                source={require('../logo.png')}/>
-              <Text style={styles.middle_text}>GAN Transfer</Text>
-              <View style={styles.bottom_button1}>
-                <Button
-                  title="사진찍어서 가져오기"
-                  onPress={() => this.buttonPress(this.props.navigation, 'camera', 'Load_Image_Page')}
-                />
-              </View>
-              <View style={styles.bottom_button2}>
-                <Button
-                  title="갤러리에서 가져오기"
-                  onPress={() => this.buttonPress(this.props.navigation, 'gallery', 'Load_Image_Page')}
-                />
-              </View>
-              </View>
-              <View style={{paddingTop: 70}}>
-              </View>
-              <View style={styles.smu_logo_container}>
+        <ScrollView>
+          <SafeAreaView>
+              <View style={styles.body}>
+                <Text style={styles.upper_text}>2020학년도 겨울방학 경험학점제 자기주도학습</Text>
+                <View style={styles.middle_logo_container}>
                 <Image
-                  style={styles.smu_logo}
-                  source={require('../smu_logo.jpg')}/>
+                  style={styles.middle_logo}
+                  source={require('../logo.png')}/>
+                <Text style={styles.middle_text}>GAN Transfer</Text>
+                <View style={styles.bottom_button1}>
+                  <Button
+                    title="사진찍어서 가져오기"
+                    onPress={() => this.buttonPress(this.props.navigation, 'camera', 'Load_Image_Page')}
+                  />
+                </View>
+                <View style={styles.bottom_button2}>
+                  <Button
+                    title="갤러리에서 가져오기"
+                    onPress={() => this.buttonPress(this.props.navigation, 'gallery', 'Load_Image_Page')}
+                  />
+                </View>
+                </View>
+                <View style={{paddingTop: 70}}>
+                </View>
+                <View style={styles.smu_logo_container}>
+                  <Image
+                    style={styles.smu_logo}
+                    source={require('../smu_logo.jpg')}/>
+                </View>
               </View>
-            </View>
-        </SafeAreaView>
+          </SafeAreaView>
+        </ScrollView>
       </>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: 'white',
-  },
-  uppertext: {
+  upper_text: {
     fontSize: 12,
     textAlign: 'center',
     backgroundColor: Colors.lighter,
