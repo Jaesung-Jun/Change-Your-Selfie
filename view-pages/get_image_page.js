@@ -48,7 +48,7 @@ export default class Get_Image_Page extends Component{
                 <Image
                   style={styles.middle_logo}
                   source={require('../logo.png')}/>
-                <Text style={styles.middle_text}>GAN Transfer</Text>
+                <Text style={styles.middle_text}>Change Your Selfie</Text>
                 <View style={styles.bottom_button1}>
                   <Button
                     title="사진찍어서 가져오기"

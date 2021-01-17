@@ -6,11 +6,14 @@ import Draggable from 'react-native-draggable';
 import {
 Platform, 
 StyleSheet, 
+Animated,
 Text, 
 View,
 Image,
 ColorPropType,
+PanResponder,
 } from 'react-native';
+
 import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen'
@@ -26,44 +29,45 @@ export default class Load_Image_Page extends Component{
     this.upload_image = new Upload_Image(this);
     this.state = {
       original_image_uri: image_info.path,
-      transfered_images_base64: {
-        img: "",
-        img_m_05: "",
-        img_m_04: "",
-        img_m_03: "",
-        img_m_02: "",
-        img_m_01: "",
-        img_00: "", 
-        img_p_01: "",
-        img_p_02: "",
-        img_p_03: "",
-        img_p_04: "",
-        img_p_05: "",
-      },
+      original_image_base64: "",
+      transfered_images_base64: ["", "", "", "", "", "", "", "", "", "", ""],
+      now_viewing_image: "",
       image_upload_percent: 0.0,
-      image_upload_stataus: "",
+      image_upload_status: "",
+      progress_bar_timeout: ({}),
+      upload_complete: false,
     };
-    
-    const image_upload_info = {
-      uri: image_info.path,
-      style_control_value: 1,
-      ratio_control_value: 0,
+  }
+
+  componentDidMount(){
+
+    this._isMounted = true;
+
+    this.image_upload_info = {
+      uri: this.state.original_image_uri,
+      init_style_control_value: -0.0,
+      init_ratio_control_value: 0,
+      increasing_count : 10,
+      increasing_control_value: 0.1 ,
     };
 
-    const server_info = {
+    this.server_info = {
       url: 'http://192.168.154.29',
       port: 8000,
     };
 
-    this.upload_image.uploadImage(image_upload_info, server_info);
+    if(this._isMounted){
+      this.upload_image.uploadImage(this.image_upload_info, this.server_info);
+    }
   }
 
   componentWillUnmount(){
-    clearTimeout(this.progress_bar_timeout);
+    this._isMounted = false;
+    clearTimeout(this.state.progress_bar_timeout);
   }
 
   render() {
-    this.progress_bar_timeout = this.upload_image.updateProgressBar();
+    //this.progress_bar_timeout = this.upload_image.updateProgressBar(0.1);
     //
     /*
     setTimeout((function() {
@@ -72,6 +76,7 @@ export default class Load_Image_Page extends Component{
       });
 
     }).bind(this), 100);*/
+    //console.log(this.state.now_viewing_image.substring(5000, 5004));
 
     return (
       <View style={styles.body}>
@@ -80,12 +85,30 @@ export default class Load_Image_Page extends Component{
           <Text style={styles.selected_image_text}>선택한 이미지</Text>
           <Image
                   style={styles.seleted_image}
-                  source={{uri: this.state.original_image_uri}}
+                  //source={{uri: this.state.original_image_uri}}
+                  source={{uri: `data:image/jpeg;base64,${this.state.now_viewing_image}`,}}
           /> 
           <Text style={styles.uploading_status_text}>업로드 상태 : {this.state.image_upload_status}</Text>
           <View style={styles.progress_bar_container}>
             <Progress.Bar progress={this.state.image_upload_percent} width={250} color={Colors.Black}/>
-            
+            <Draggable
+              x={230}
+              y={86}
+              minY={86} maxY={86} minX={10} maxX={265}         //0-392.34375
+              renderText=""
+              onDragRelease={async (e) => {
+                if(this._isMounted){
+                  this.upload_image.updateImage(e.nativeEvent.pageX, this.image_upload_info.increasing_count);
+                }
+              }}
+              renderSize={this.state.upload_complete ? 35 : 0 }
+              renderColor='blue'
+              isCircle
+              //{...this.panResponder.panhandlers}
+            />
+            <View style={{opacity: this.state.upload_complete ? 1 : 0 }}>
+              <Text style={styles.slide_text}>왼쪽 오른쪽으로 슬라이드 해보세요!</Text>
+            </View>
           </View>
         </View>
       </View>
@@ -112,8 +135,16 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   progress_bar_container: {
+    resizeMode: 'contain',
+    justifyContent: 'center',
+    alignItems: 'center',
     paddingTop: 100,
   },
+  
+  slide_text: {
+    padding: 30,
+  },
+
   selected_image_text: {
     fontSize: 20,
     padding: 10,
